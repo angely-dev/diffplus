@@ -1,0 +1,22 @@
+ ! badly indented on purpose
+ no ip domain lookup
+!
+interface FastEthernet0/0
+ no shutdown
+!
+interface FastEthernet0/0.10
+   ! badly indented on purpose
+   description LAN
+ encapsulation dot1Q 10
+ ip address 192.168.1.254 255.255.255.0
+!
+router bgp 64512
+ neighbor 172.16.0.1 remote-as 100
+ !
+ address-family ipv4
+  neighbor 172.16.0.1 activate
+  neighbor 172.16.0.1 allowas-in 1
+  neighbor 172.16.0.1 prefix-list IN in
+  neighbor 172.16.0.1 prefix-list OUT out
+  network 192.168.1.0 mask 255.255.255.0
+!
