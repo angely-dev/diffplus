@@ -40,7 +40,8 @@ class IncrementalDiff:
                 new_items[f'+{item}'] = a[item]
             else:
                 # item already in B, look for diff into its children
-                if new_children := IncrementalDiff._to_dict(a[item], b[item], merge):
+                new_children = IncrementalDiff._to_dict(a[item], b[item], merge)
+                if new_children:
                     new_items[item] = new_children
 
         if merge:
