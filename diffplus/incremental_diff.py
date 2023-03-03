@@ -14,6 +14,7 @@ class IncrementalDiff:
     #   - if "merge" is True, the diff will include B items as well
     #
     # Merging is useful to preview a full config before applying it.
+    # Coloring is useful to better visualize the changes in the diff.
     #
     def __init__(self, a: IndentedConfig, b: IndentedConfig, merge = False, colored = False):
         self.a = a
