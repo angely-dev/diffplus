@@ -1,6 +1,13 @@
 from .indented_config import IndentedConfig
+from re import sub
 
 class IncrementalDiff:
+    #
+    # For colored diff (same ANSI colors as Git).
+    #
+    _COLOR_GREEN = '\033[32m'
+    _COLOR_RESET = '\033[m'
+
     #
     # Initializes an incremental diff between two indented configs:
     #   - the diff will look for A items missing in B items
@@ -8,10 +15,11 @@ class IncrementalDiff:
     #
     # Merging is useful to preview a full config before applying it.
     #
-    def __init__(self, a: IndentedConfig, b: IndentedConfig, merge = False):
+    def __init__(self, a: IndentedConfig, b: IndentedConfig, merge = False, colored = False):
         self.a = a
         self.b = b
         self.merge = merge
+        self.colored = colored
 
     #
     # Returns the incremental diff as a dict.
@@ -24,6 +32,8 @@ class IncrementalDiff:
     #
     def __str__(self):
         str_ = IncrementalDiff._to_str(self.to_dict(), indent_char=self.a.indent_char)
+        if self.colored:
+            str_ = sub('(\+.*)', fr'{self._COLOR_GREEN}\1{self._COLOR_RESET}', str_)
         return str_.rstrip('\n') # just a little hack to remove the last newline char
 
     #

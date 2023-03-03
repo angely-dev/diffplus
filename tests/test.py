@@ -1,7 +1,7 @@
 from .expected import configA_dict, configA_str
 from .expected import configB_dict, configB_str
-from .expected import diffmerge_dict, diffmerge_str
-from .expected import diffonly_dict, diffonly_str
+from .expected import diffmerge_dict, diffmerge_str, diffmerge_str_colored
+from .expected import diffonly_dict, diffonly_str, diffonly_str_colored
 from diffplus import IndentedConfig, IncrementalDiff
 import unittest
 
@@ -31,3 +31,8 @@ class TestDiffPlus(unittest.TestCase):
         diffmerge = IncrementalDiff(configA, configB, merge=True)
         self.assertEqual(diffmerge.to_dict(), diffmerge_dict)
         self.assertEqual(diffmerge.__str__(), diffmerge_str)
+
+        diffonly.colored = True
+        diffmerge.colored = True
+        self.assertEqual(diffonly.__str__(), diffonly_str_colored)
+        self.assertEqual(diffmerge.__str__(), diffmerge_str_colored)
