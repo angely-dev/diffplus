@@ -392,7 +392,7 @@ ip prefix-list OUT seq 5 permit 192.168.1.0/24
 
 ### Under the hood
 
-The incremental diff is computed recursively as a dict you can access through the `to_dict()` method:
+The incremental diff is computed recursively as a dict you can access (if needed) through the `to_dict()` method:
 
 ```py
 diff = IncrementalDiff(configA, configB, merge=False) # or merge=True
@@ -421,7 +421,13 @@ Output:
 }
 ```
 
-New items are marked with a `+` so that they can be pretty rendered recursively via the `__str__()` special method.
+New items are marked with a `+` so that they can be pretty rendered recursively via the `__str__()` special method:
+
+```py
+print(diff)
+print(str(diff)) # equivalent
+print(diff.__str__()) # equivalent
+```
 
 ## Diff using a third-party module
 
