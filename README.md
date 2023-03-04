@@ -7,6 +7,9 @@
   * [Indented config to dict](#indented-config-to-dict)
   * [Sanitizing](#sanitizing)
   * [Incremental diff](#incremental-diff)
+    * [Diff only](#diff-only)
+    * [Merging](#merging)
+    * [Colored diff](#colored-diff)
   * [Diff using a third-party module](#diff-using-a-third-party-module) (optional)
 * [Does DiffPlus reinvent the wheel?](#does-diffplus-reinvent-the-wheel)
 
