@@ -10,6 +10,7 @@
     * [Diff only](#diff-only)
     * [Merging](#merging)
     * [Colored diff](#colored-diff)
+    * [Under the hood](#under-the-hood)
   * [Diff using a third-party module](#diff-using-a-third-party-module) (optional)
 * [Does DiffPlus reinvent the wheel?](#does-diffplus-reinvent-the-wheel)
 
