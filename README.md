@@ -356,7 +356,15 @@ router bgp 64512
 Alternatively, we can merge `A` into `B`. It is useful to get a preview of the full config before applying it:
 
 ```py
+from diffplus import IndentedConfig, IncrementalDiff
+
+configA = open('configA.txt').read()
+configB = open('configB.txt').read()
+
+configA = IndentedConfig(configA, comment_char='!', sanitize=True)
+configB = IndentedConfig(configB, comment_char='!', sanitize=True)
 diff = IncrementalDiff(configA, configB, merge=True)
+
 print(diff)
 ```
 
@@ -389,6 +397,48 @@ ip prefix-list OUT seq 5 permit 192.168.1.0/24
 + encapsulation dot1Q 10
 + ip address 192.168.1.254 255.255.255.0
 ```
+
+### Colored diff
+
+It is useful to better visualize the changes in the diff:
+
+```py
+from diffplus import IndentedConfig, IncrementalDiff
+
+configA = open('configA.txt').read()
+configB = open('configB.txt').read()
+
+configA = IndentedConfig(configA, comment_char='!', sanitize=True)
+configB = IndentedConfig(configB, comment_char='!', sanitize=True)
+diff = IncrementalDiff(configA, configB, merge=True, colored=True)
+
+print(diff)
+```
+
+Output:
+
+<table>
+ <thead>
+  <tr>
+   <th>Not colored</th>
+   <th>Colored</th>
+  </tr>
+ </thead>
+ <tbody>
+  <tr>
+   <td>
+   
+   ![](https://user-images.githubusercontent.com/4362224/222919743-cdec455b-d971-4d6a-82d3-9df749c80784.png)
+   </td>
+   <td>
+
+   ![](https://user-images.githubusercontent.com/4362224/222919787-b0dc8f31-0cef-404d-8db7-c6111ff67af2.png)
+   </td>
+  </tr>
+ </tbody>
+</table>
+
+Colorization is done through ANSI escape sequences: `\033[32m` for green color and `\033[m` for reset color.
 
 ### Under the hood
 
