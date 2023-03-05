@@ -404,7 +404,7 @@ ip prefix-list OUT seq 5 permit 192.168.1.0/24
 
 ### Colored diff
 
-It is useful to better visualize the changes in the diff:
+This option is useful to better visualize the changes in the diff:
 
 ```py
 from diffplus import IndentedConfig, IncrementalDiff
