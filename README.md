@@ -133,7 +133,7 @@ As simple as it seems, such a diff is not so trivial for an algorithm.
 
 The *n*-ary tree data structure will help: to represent how nested the items are, to do the match between blocks.
 
-Because we deal with config files, **each line is unique per indented block.** Therefore, no need for a list of nodes (allowing for duplicates). We can directly use raw nested dicts as *n*-ary trees, keys being the lines.
+Because we deal with config files, **each line is unique per indented block.** Therefore, no need for a list of nodes (allowing for duplicates). We can directly use raw nested dicts as *n*-ary trees, keys being the lines. The tree conversion is thus achieved with [10 lines of code only](https://github.com/angely-dev/diffplus/blob/1.0.0/diffplus/indented_config.py#L28-L37).
 
 The deep comparison can then be achieved with either a dedicated third-party module or the lightweight [IncrementalDiff](#incremental-diff) helper embedded in this module.
 
