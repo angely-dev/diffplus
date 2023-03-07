@@ -7,11 +7,11 @@
   * [Indented config to dict](#indented-config-to-dict)
   * [Sanitizing](#sanitizing)
   * [Incremental diff](#incremental-diff)
-    * [Diff only](#diff-only)
-    * [Merging](#merging)
-    * [Colored diff](#colored-diff)
-    * [Under the hood](#under-the-hood)
   * [Diff using a third-party module](#diff-using-a-third-party-module) (optional)
+* [Known limitations](#known-limitations)
+  * [Only additions, no deletions](#only-additions-no-deletions)
+  * [Code-like config](#code-like-config)
+  * [One character for indentation](#one-character-for-indentation)
 * [Does DiffPlus reinvent the wheel?](#does-diffplus-reinvent-the-wheel)
 
 # What is DiffPlus?
@@ -133,7 +133,7 @@ As simple as it seems, such a diff is not so trivial for an algorithm.
 
 The *n*-ary tree data structure will help: to represent how nested the items are, to do the match between blocks.
 
-Because we deal with config files, **each line is unique per indented block.** Therefore, no need for a list of nodes (allowing for duplicates). We can directly use raw nested dicts as *n*-ary trees, keys being the lines. The tree conversion is thus achieved with [10 lines of code only](https://github.com/angely-dev/diffplus/blob/1.0.0/diffplus/indented_config.py#L28-L37).
+Because we deal with config files, **each line is unique per indented block.** Therefore, no need for a list of nodes (allowing for duplicates). We can directly use raw nested dicts as *n*-ary trees, keys being the lines.
 
 The deep comparison can then be achieved with either a dedicated third-party module or the lightweight [IncrementalDiff](#incremental-diff) helper embedded in this module.
 
@@ -520,6 +520,125 @@ interface FastEthernet0/0.10 # displayed in above output as root['interface Fast
  encapsulation dot1Q 10                 # not displayed in above output
  ip address 192.168.1.254 255.255.255.0 # not displayed in above output
 ```
+
+# Known limitations
+
+## Only additions, no deletions
+
+Because DiffPlus focuses on merging a config into another one—and not just doing a line-by-line diff—deletions aren't as easy as additions to compute. **How to know that an item of `A` will affect another one in `B`?**
+
+Let's take an example in a network context:
+
+```diff
+# computed by diffplus (only additions)
+
+interface FastEthernet0/0
+ description Some interface
++ no description
+ ip address 10.0.0.1 255.255.255.0
+ ip address 10.0.0.2 255.255.255.0 secondary
+ ip address 10.0.0.3 255.255.255.0 secondary
++ no ip address 10.0.0.3 255.255.255.0 secondary
++ ip address 10.0.0.4 255.255.255.0 secondary
+ speed 10
++ speed 100
+```
+
+Some of the new items will negate or change existing ones. So we'd like a smarter diff:
+
+```diff
+# NOT computed by diffplus (additions and deletions)
+
+interface FastEthernet0/0
+- description Some interface
+ ip address 10.0.0.1 255.255.255.0
+ ip address 10.0.0.2 255.255.255.0 secondary
+- ip address 10.0.0.3 255.255.255.0 secondary
++ ip address 10.0.0.4 255.255.255.0 secondary
+- speed 10
++ speed 100
+```
+
+We humans are able to compute that diff because we visually identify items and are familiar with the config logic. From an algorithmic point of view, however, it is challenging. Not only it depends on the config grammar and syntax (i.e., what are considered keywords and values) but also on the semantic (e.g., adding an item won't necessarily replace a similar one as it is the case for `secondary` addresses).
+
+The **closest string match approach** using an helper like [`difflib.get_close_matches()`](https://docs.python.org/3/library/difflib.html#difflib.get_close_matches) is an interesting lead, yet not 100% accurate and it would have over-complexified the module.
+
+## Code-like config
+
+By essence, DiffPlus is not suited for code diff. Each line is assumed to be unique per indented block. Therefore, the tree conversion won't work well with algorithms as they have statements which repeat in the code.
+
+Let's take an example with pseudocode:
+
+```sh
+# algo.txt
+
+if some_expression then
+ first_if_content
+else
+ first_else_content
+fi
+if anoter_expression then
+ second_if_content
+else
+ second_else_content
+fi
+```
+
+Tree conversion:
+
+```py
+from diffplus import IndentedConfig
+from json import dumps
+
+algo = open('algo.txt').read()
+algo = IndentedConfig(algo)
+
+print(dumps(algo.to_dict(), indent=4))
+```
+
+Output:
+
+```json
+{
+    "if some_expression then": {
+        "first_if_content": {}
+    },
+    "else": {
+        "second_else_content": {}
+    },
+    "fi": {},
+    "if anoter_expression then": {
+        "second_if_content": {}
+    }
+}
+```
+
+Inconsistencies:
+
+* There is only one `fi` instead of twos.
+* Likewise, the first `else` has been overwritten by the second one at the same indentation level.
+
+This is in accordance with how the module works: it has been designed for config diff, not code diff.
+
+## One character for indentation
+
+For now, DiffPlus does not support multiple characters as indentation symbol:
+
+```py
+IndentedConfig(config, indent_char='  ')   # 2 spaces (NOT supported)
+IndentedConfig(config, indent_char='    ') # 4 spaces (NOT supported)
+IndentedConfig(config, indent_char='\t')   # tab char (supported)
+```
+
+The first two lines will raise an error:
+
+```sh
+ValueError: "indent_char" must be a char, not an str
+```
+
+*The same limitation applies for `comment_char`.*
+
+A future version may support it if the module gains interest in the community.
 
 # Does DiffPlus reinvent the wheel?
 
