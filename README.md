@@ -1,3 +1,7 @@
+[![python](https://img.shields.io/badge/python-3.7+-success.svg)](https://www.python.org/downloads/release/python-370)
+[![pypi](https://img.shields.io/badge/pypi-published-success.svg)](https://pypi.org/project/diffplus)
+[![license](https://img.shields.io/badge/license-MIT-success.svg)](https://opensource.org/licenses/MIT)
+
 * [What is DiffPlus?](#what-is-diffplus)
   * [What for?](#what-for)
   * [Problem](#problem)
