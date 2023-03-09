@@ -110,14 +110,14 @@ We humans are able to compute that diff with ease because we visually identify b
 # items of A to be added in B (to be computed by diffplus)
 
 +no ip domain lookup
-interface FastEthernet0/0
+ interface FastEthernet0/0
 + no shutdown
 +interface FastEthernet0/0.10
 + description LAN
 + encapsulation dot1Q 10
 + ip address 192.168.1.254 255.255.255.0
-router bgp 64512
- address-family ipv4
+ router bgp 64512
+  address-family ipv4
 +  neighbor 172.16.0.1 allowas-in 1
 +  network 192.168.1.0 mask 255.255.255.0
 ```
@@ -343,14 +343,14 @@ Output:
 # items of A to be added in B (computed by IncrementalDiff)
 
 +no ip domain lookup
-interface FastEthernet0/0
+ interface FastEthernet0/0
 + no shutdown
 +interface FastEthernet0/0.10
 + description LAN
 + encapsulation dot1Q 10
 + ip address 192.168.1.254 255.255.255.0
-router bgp 64512
- address-family ipv4
+ router bgp 64512
+  address-family ipv4
 +  neighbor 172.16.0.1 allowas-in 1
 +  network 192.168.1.0 mask 255.255.255.0
 ```
@@ -377,24 +377,24 @@ Output:
 ```diff
 # items of A merged into B (computed by IncrementalDiff)
 
-hostname R1
-interface FastEthernet0/0
- description LAN
- no ip address
- shutdown
- duplex auto
- speed auto
+ hostname R1
+ interface FastEthernet0/0
+  description LAN
+  no ip address
+  shutdown
+  duplex auto
+  speed auto
 + no shutdown
-router bgp 64512
- neighbor 172.16.0.1 remote-as 100
- address-family ipv4
-  neighbor 172.16.0.1 activate
-  neighbor 172.16.0.1 prefix-list IN in
-  neighbor 172.16.0.1 prefix-list OUT out
+ router bgp 64512
+  neighbor 172.16.0.1 remote-as 100
+  address-family ipv4
+   neighbor 172.16.0.1 activate
+   neighbor 172.16.0.1 prefix-list IN in
+   neighbor 172.16.0.1 prefix-list OUT out
 +  neighbor 172.16.0.1 allowas-in 1
 +  network 192.168.1.0 mask 255.255.255.0
-ip prefix-list IN seq 5 permit 192.168.2.0/24
-ip prefix-list OUT seq 5 permit 192.168.1.0/24
+ ip prefix-list IN seq 5 permit 192.168.2.0/24
+ ip prefix-list OUT seq 5 permit 192.168.1.0/24
 +no ip domain lookup
 +interface FastEthernet0/0.10
 + description LAN
@@ -432,11 +432,11 @@ Output:
   <tr>
    <td>
    
-   ![](https://user-images.githubusercontent.com/4362224/222919743-cdec455b-d971-4d6a-82d3-9df749c80784.png)
+   ![](https://user-images.githubusercontent.com/4362224/224107670-49fa98e3-dbb7-441f-824d-d8d9b62bf79e.png)
    </td>
    <td>
 
-   ![](https://user-images.githubusercontent.com/4362224/222919787-b0dc8f31-0cef-404d-8db7-c6111ff67af2.png)
+   ![](https://user-images.githubusercontent.com/4362224/224107684-33f0d0b7-38c0-4e54-9a16-8f3a7b836c63.png)
    </td>
   </tr>
  </tbody>
@@ -532,15 +532,15 @@ Let's take an example in a network context:
 ```diff
 # computed by diffplus (only additions)
 
-interface FastEthernet0/0
- description Some interface
+ interface FastEthernet0/0
+  description Some interface
 + no description
- ip address 10.0.0.1 255.255.255.0
- ip address 10.0.0.2 255.255.255.0 secondary
- ip address 10.0.0.3 255.255.255.0 secondary
+  ip address 10.0.0.1 255.255.255.0
+  ip address 10.0.0.2 255.255.255.0 secondary
+  ip address 10.0.0.3 255.255.255.0 secondary
 + no ip address 10.0.0.3 255.255.255.0 secondary
 + ip address 10.0.0.4 255.255.255.0 secondary
- speed 10
+  speed 10
 + speed 100
 ```
 
@@ -549,10 +549,10 @@ Some of the new items will negate or change existing ones. So we'd like a smarte
 ```diff
 # NOT computed by diffplus (additions and deletions)
 
-interface FastEthernet0/0
+ interface FastEthernet0/0
 - description Some interface
- ip address 10.0.0.1 255.255.255.0
- ip address 10.0.0.2 255.255.255.0 secondary
+  ip address 10.0.0.1 255.255.255.0
+  ip address 10.0.0.2 255.255.255.0 secondary
 - ip address 10.0.0.3 255.255.255.0 secondary
 + ip address 10.0.0.4 255.255.255.0 secondary
 - speed 10
