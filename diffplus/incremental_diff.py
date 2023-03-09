@@ -71,7 +71,7 @@ class IncrementalDiff:
 
         for item in incrdiff:
             plus = is_new or item.startswith('+')
-            str_ += '+' if plus else ''
+            str_ += '+' if plus else ' '
             str_ += indent_level * indent_char + item.lstrip('+') + '\n'
             str_ += IncrementalDiff._to_str(incrdiff[item], indent_char, indent_level + 1, plus)
 
