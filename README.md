@@ -143,6 +143,8 @@ The deep comparison can then be achieved with either a dedicated third-party mod
 
 # HOWTO
 
+The config files used below are [configA.txt](https://raw.githubusercontent.com/angely-dev/diffplus/master/tests/configA.txt) and [configB.txt](https://raw.githubusercontent.com/angely-dev/diffplus/master/tests/configB.txt).
+
 ## Install
 
 DiffPlus is available on [PyPI](https://pypi.org/project/diffplus):
