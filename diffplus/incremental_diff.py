@@ -1,5 +1,5 @@
 from .indented_config import IndentedConfig
-from re import sub
+from re import sub, M
 
 class IncrementalDiff:
     #
@@ -34,7 +34,7 @@ class IncrementalDiff:
     def __str__(self):
         str_ = IncrementalDiff._to_str(self.to_dict(), indent_char=self.a.indent_char)
         if self.colored:
-            str_ = sub('(\+.*)', fr'{self._COLOR_GREEN}\1{self._COLOR_RESET}', str_)
+            str_ = sub('^(\+.*)$', fr'{self._COLOR_GREEN}\1{self._COLOR_RESET}', str_, flags=M)
         return str_.rstrip('\n') # just a little hack to remove the last newline char
 
     #
