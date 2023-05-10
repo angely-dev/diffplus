@@ -657,3 +657,5 @@ I didn't find a suitable module providing such an incremental and contextual dif
 * [diffios](https://github.com/robphoenix/diffios) only supports Cisco format and it is not clear what it does exactly (variable parsing or diff?)
 * [shconfparser](https://github.com/network-tools/shconfparser) (probably the closest one) only supports Cisco format and does not offer diff features
 * [conf_diff](https://developer.cisco.com/codeexchange/github/repo/muhammad-rafi/conf_diff) does a line-by-line diff
+
+**Update:** [netutils](https://github.com/networktocode/netutils), which is partially used in the [NAPALM](https://github.com/napalm-automation/napalm/pull/1567) project, provides a similar diff mechanism. Yet network-oriented, the proposed implementation is interesting.
