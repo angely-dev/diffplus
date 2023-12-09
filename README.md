@@ -1,4 +1,4 @@
-[![python](https://img.shields.io/badge/python-3.7+-success.svg)](https://www.python.org/downloads/release/python-370)
+[![python](https://img.shields.io/badge/python-3.8+-success.svg)](https://devguide.python.org/versions)
 [![pypi](https://img.shields.io/badge/pypi-published-success.svg)](https://pypi.org/project/diffplus)
 [![license](https://img.shields.io/badge/license-MIT-success.svg)](https://opensource.org/licenses/MIT)
 
