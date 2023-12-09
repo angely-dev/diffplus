@@ -5,18 +5,19 @@ from .expected import diffonly_dict, diffonly_str, diffonly_str_colored
 from diffplus import IndentedConfig, IncrementalDiff
 import unittest
 
-configA = open('tests/configA.txt').read()
-configB = open('tests/configB.txt').read()
+configA = open("tests/configA.txt").read()
+configB = open("tests/configB.txt").read()
 
-configA = IndentedConfig(configA, comment_char='!', sanitize=False)
-configB = IndentedConfig(configB, comment_char='!', sanitize=True)
+configA = IndentedConfig(configA, comment_char="!", sanitize=False)
+configB = IndentedConfig(configB, comment_char="!", sanitize=True)
 configA.sanitize()
+
 
 class TestDiffPlus(unittest.TestCase):
     def test_indented_config(self):
-        self.assertRaises(ValueError, IndentedConfig, config='', indent_char='  ')
-        self.assertRaises(ValueError, IndentedConfig, config='', comment_char='##')
-        
+        self.assertRaises(ValueError, IndentedConfig, config="", indent_char="  ")
+        self.assertRaises(ValueError, IndentedConfig, config="", comment_char="##")
+
         self.assertEqual(configA.to_dict(), configA_dict)
         self.assertEqual(configA.__str__(), configA_str)
 

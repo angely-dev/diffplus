@@ -6,7 +6,7 @@ class IndentedConfig:
     #
     # The config may be sanitized at init via the "sanitize" parameter.
     #
-    def __init__(self, config: str, indent_char = ' ', comment_char = '#', sanitize = False):
+    def __init__(self, config: str, indent_char=" ", comment_char="#", sanitize=False):
         if not len(indent_char) == 1:
             raise ValueError(f'"indent_char" must be a char, not an str')
         if not len(comment_char) == 1:
@@ -26,7 +26,7 @@ class IndentedConfig:
     #
     def to_dict(self):
         tree = {}
-        last_parent = {0: tree} # last parents encountered by indent level
+        last_parent = {0: tree}  # last parents encountered by indent level
 
         for line in self.config.splitlines():
             child_name = line.lstrip(self.indent_char)
@@ -58,9 +58,9 @@ class IndentedConfig:
             line_indent_level = len(line) - len(line.lstrip(self.indent_char))
 
             if not line_indent_level <= max_indent_level:
-                line_indent_level = max_indent_level # fix indent level
-                line = line.lstrip(self.indent_char) # remove bad indent
-                line = line_indent_level * self.indent_char + line # insert good indent
+                line_indent_level = max_indent_level  # fix indent level
+                line = line.lstrip(self.indent_char)  # remove bad indent
+                line = line_indent_level * self.indent_char + line  # insert good indent
 
             max_indent_level = line_indent_level + 1
 
@@ -68,7 +68,7 @@ class IndentedConfig:
             sanitized_indented_config.append(line)
 
         # config has been sanitized
-        self.config = '\n'.join(sanitized_indented_config)
+        self.config = "\n".join(sanitized_indented_config)
 
     #
     # Returns the indented config as an str.

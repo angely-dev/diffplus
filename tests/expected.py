@@ -3,13 +3,11 @@
 #
 configA_dict = {
     "no ip domain lookup": {},
-    "interface FastEthernet0/0": {
-        "no shutdown": {}
-    },
+    "interface FastEthernet0/0": {"no shutdown": {}},
     "interface FastEthernet0/0.10": {
         "description LAN": {},
         "encapsulation dot1Q 10": {},
-        "ip address 192.168.1.254 255.255.255.0": {}
+        "ip address 192.168.1.254 255.255.255.0": {},
     },
     "router bgp 64512": {
         "neighbor 172.16.0.1 remote-as 100": {},
@@ -18,9 +16,9 @@ configA_dict = {
             "neighbor 172.16.0.1 allowas-in 1": {},
             "neighbor 172.16.0.1 prefix-list IN in": {},
             "neighbor 172.16.0.1 prefix-list OUT out": {},
-            "network 192.168.1.0 mask 255.255.255.0": {}
-        }
-    }
+            "network 192.168.1.0 mask 255.255.255.0": {},
+        },
+    },
 }
 configA_str = """no ip domain lookup
 interface FastEthernet0/0
@@ -48,18 +46,18 @@ configB_dict = {
         "no ip address": {},
         "shutdown": {},
         "duplex auto": {},
-        "speed auto": {}
+        "speed auto": {},
     },
     "router bgp 64512": {
         "neighbor 172.16.0.1 remote-as 100": {},
         "address-family ipv4": {
             "neighbor 172.16.0.1 activate": {},
             "neighbor 172.16.0.1 prefix-list IN in": {},
-            "neighbor 172.16.0.1 prefix-list OUT out": {}
-        }
+            "neighbor 172.16.0.1 prefix-list OUT out": {},
+        },
     },
     "ip prefix-list IN seq 5 permit 192.168.2.0/24": {},
-    "ip prefix-list OUT seq 5 permit 192.168.1.0/24": {}
+    "ip prefix-list OUT seq 5 permit 192.168.1.0/24": {},
 }
 configB_str = """hostname R1
 interface FastEthernet0/0
@@ -82,20 +80,18 @@ ip prefix-list OUT seq 5 permit 192.168.1.0/24"""
 #
 diffonly_dict = {
     "+no ip domain lookup": {},
-    "interface FastEthernet0/0": {
-        "+no shutdown": {}
-    },
+    "interface FastEthernet0/0": {"+no shutdown": {}},
     "+interface FastEthernet0/0.10": {
         "description LAN": {},
         "encapsulation dot1Q 10": {},
-        "ip address 192.168.1.254 255.255.255.0": {}
+        "ip address 192.168.1.254 255.255.255.0": {},
     },
     "router bgp 64512": {
         "address-family ipv4": {
             "+neighbor 172.16.0.1 allowas-in 1": {},
-            "+network 192.168.1.0 mask 255.255.255.0": {}
+            "+network 192.168.1.0 mask 255.255.255.0": {},
         }
-    }
+    },
 }
 diffonly_str = """+no ip domain lookup
  interface FastEthernet0/0
@@ -131,7 +127,7 @@ diffmerge_dict = {
         "shutdown": {},
         "duplex auto": {},
         "speed auto": {},
-        "+no shutdown": {}
+        "+no shutdown": {},
     },
     "router bgp 64512": {
         "neighbor 172.16.0.1 remote-as 100": {},
@@ -140,8 +136,8 @@ diffmerge_dict = {
             "neighbor 172.16.0.1 prefix-list IN in": {},
             "neighbor 172.16.0.1 prefix-list OUT out": {},
             "+neighbor 172.16.0.1 allowas-in 1": {},
-            "+network 192.168.1.0 mask 255.255.255.0": {}
-        }
+            "+network 192.168.1.0 mask 255.255.255.0": {},
+        },
     },
     "ip prefix-list IN seq 5 permit 192.168.2.0/24": {},
     "ip prefix-list OUT seq 5 permit 192.168.1.0/24": {},
@@ -149,8 +145,8 @@ diffmerge_dict = {
     "+interface FastEthernet0/0.10": {
         "description LAN": {},
         "encapsulation dot1Q 10": {},
-        "ip address 192.168.1.254 255.255.255.0": {}
-    }
+        "ip address 192.168.1.254 255.255.255.0": {},
+    },
 }
 diffmerge_str = """ hostname R1
  interface FastEthernet0/0
