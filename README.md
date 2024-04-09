@@ -139,6 +139,8 @@ The *n*-ary tree data structure will help: to represent how nested the items are
 
 Because we deal with config files, **each line is unique per indented block.** Therefore, no need for a list of nodes (allowing for duplicates). We can directly use raw nested dicts as *n*-ary trees, keys being the lines.
 
+> For comparison, this [gist](https://gist.github.com/angely-dev/0729c24618e40876b38c81c52278064f) illustrates another approach based on a list of nodes.
+
 The deep comparison can then be achieved with either a dedicated third-party module or the lightweight [IncrementalDiff](#incremental-diff) helper embedded in this module.
 
 # HOWTO
