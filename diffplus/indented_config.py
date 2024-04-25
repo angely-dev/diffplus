@@ -1,3 +1,9 @@
+from typing import Dict, List
+
+# Recursive type alias
+IndentedConfigDict = Dict[str, "IndentedConfigDict"]
+
+
 class IndentedConfig:
     #
     # Initializes a given config:
@@ -6,11 +12,17 @@ class IndentedConfig:
     #
     # The config may be sanitized at init via the "sanitize" parameter.
     #
-    def __init__(self, config: str, indent_char=" ", comment_char="#", sanitize=False):
+    def __init__(
+        self,
+        config: str,
+        indent_char: str = " ",
+        comment_char: str = "#",
+        sanitize: bool = False,
+    ) -> None:
         if not len(indent_char) == 1:
-            raise ValueError(f'"indent_char" must be a char, not an str')
+            raise ValueError(f'"indent_char" must be a char')
         if not len(comment_char) == 1:
-            raise ValueError(f'"comment_char" must be a char, not an str')
+            raise ValueError(f'"comment_char" must be a char')
         self.config = config
         self.indent_char = indent_char
         self.comment_char = comment_char
@@ -24,8 +36,8 @@ class IndentedConfig:
     #
     # A KeyError may be raised if the config is not correctly indented.
     #
-    def to_dict(self):
-        tree = {}
+    def to_dict(self) -> IndentedConfigDict:
+        tree: IndentedConfigDict = {}
         last_parent = {0: tree}  # last parents encountered by indent level
 
         for line in self.config.splitlines():
@@ -42,8 +54,8 @@ class IndentedConfig:
     #   - ignore blank lines and comments
     #   - fix lines not correctly indented
     #
-    def sanitize(self):
-        sanitized_indented_config = []
+    def sanitize(self) -> None:
+        sanitized_indented_config: List[str] = []
         max_indent_level = 0
 
         for line in self.config.splitlines():
@@ -73,5 +85,5 @@ class IndentedConfig:
     #
     # Returns the indented config as an str.
     #
-    def __str__(self):
+    def __str__(self) -> str:
         return self.config

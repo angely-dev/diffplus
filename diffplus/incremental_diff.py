@@ -1,5 +1,9 @@
-from .indented_config import IndentedConfig
+from .indented_config import IndentedConfig, IndentedConfigDict
 from re import sub, M
+from typing import Dict
+
+# Recursive type alias
+IncrementalDiffDict = Dict[str, "IncrementalDiffDict"]
 
 
 class IncrementalDiff:
@@ -18,8 +22,12 @@ class IncrementalDiff:
     # Coloring is useful to better visualize the changes in the diff.
     #
     def __init__(
-        self, a: IndentedConfig, b: IndentedConfig, merge=False, colored=False
-    ):
+        self,
+        a: IndentedConfig,
+        b: IndentedConfig,
+        merge: bool = False,
+        colored: bool = False,
+    ) -> None:
         self.a = a
         self.b = b
         self.merge = merge
@@ -28,13 +36,13 @@ class IncrementalDiff:
     #
     # Returns the incremental diff as a dict.
     #
-    def to_dict(self):
+    def to_dict(self) -> IncrementalDiffDict:
         return IncrementalDiff._to_dict(self.a.to_dict(), self.b.to_dict(), self.merge)
 
     #
     # Returns the incremental diff as an str.
     #
-    def __str__(self):
+    def __str__(self) -> str:
         str_ = IncrementalDiff._to_str(self.to_dict(), indent_char=self.a.indent_char)
         if self.colored:
             str_ = sub(
@@ -47,8 +55,10 @@ class IncrementalDiff:
     # New items from A are prepended by "+" to tell them from existing ones from B.
     #
     @staticmethod
-    def _to_dict(a, b, merge=False):
-        new_items = {}
+    def _to_dict(
+        a: IndentedConfigDict, b: IndentedConfigDict, merge: bool = False
+    ) -> IncrementalDiffDict:
+        new_items: IncrementalDiffDict = {}
 
         for item in a.keys():
             if item not in b.keys():
@@ -71,7 +81,12 @@ class IncrementalDiff:
     # It is pretty as it indents lines and adds a "+" in front of new ones.
     #
     @staticmethod
-    def _to_str(incrdiff, indent_char=" ", indent_level=0, is_new=False):
+    def _to_str(
+        incrdiff: IncrementalDiffDict,
+        indent_char: str = " ",
+        indent_level: int = 0,
+        is_new: bool = False,
+    ) -> str:
         str_ = ""
 
         for item in incrdiff:
