@@ -2,6 +2,12 @@
 [![pypi](https://img.shields.io/badge/pypi-published-success.svg)](https://pypi.org/project/diffplus)
 [![license](https://img.shields.io/badge/license-MIT-success.svg)](https://opensource.org/licenses/MIT)
 
+---
+
+DiffPlus is now used by [NAPALM Huawei VRP](https://github.com/napalm-automation-community/napalm-huawei-vrp) driver! See [PR](https://github.com/napalm-automation-community/napalm-huawei-vrp/pull/23).
+
+---
+
 * [What is DiffPlus?](#what-is-diffplus)
   * [What for?](#what-for)
   * [Problem](#problem)
