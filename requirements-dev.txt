@@ -1,0 +1,4 @@
+coverage
+mypy
+pre-commit
+ruff
