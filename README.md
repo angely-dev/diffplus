@@ -302,7 +302,7 @@ print(config)
    <td>
 
 ```sh
- 
+
    # a global command badly indented
    sysname PE
 #
@@ -445,7 +445,7 @@ Output:
  <tbody>
   <tr>
    <td>
-   
+
    ![](https://user-images.githubusercontent.com/4362224/224107670-49fa98e3-dbb7-441f-824d-d8d9b62bf79e.png)
    </td>
    <td>

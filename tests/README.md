@@ -14,7 +14,7 @@ OK
 For measuring code coverage:
 
 ```sh
-$ coverage run -m unittest tests/test.py 
+$ coverage run -m unittest tests/test.py
 ..
 ----------------------------------------------------------------------
 Ran 2 tests in 0.001s
