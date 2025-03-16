@@ -20,9 +20,9 @@ class IndentedConfig:
         sanitize: bool = False,
     ) -> None:
         if not len(indent_char) == 1:
-            raise ValueError(f'"indent_char" must be a char')
+            raise ValueError('"indent_char" must be a char')
         if not len(comment_char) == 1:
-            raise ValueError(f'"comment_char" must be a char')
+            raise ValueError('"comment_char" must be a char')
         self.config = config
         self.indent_char = indent_char
         self.comment_char = comment_char

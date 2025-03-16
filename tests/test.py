@@ -1,9 +1,19 @@
-from .expected import configA_dict, configA_str
-from .expected import configB_dict, configB_str
-from .expected import diffmerge_dict, diffmerge_str, diffmerge_str_colored
-from .expected import diffonly_dict, diffonly_str, diffonly_str_colored
-from diffplus import IndentedConfig, IncrementalDiff
 import unittest
+
+from diffplus import IncrementalDiff, IndentedConfig
+
+from .expected import (
+    configA_dict,
+    configA_str,
+    configB_dict,
+    configB_str,
+    diffmerge_dict,
+    diffmerge_str,
+    diffmerge_str_colored,
+    diffonly_dict,
+    diffonly_str,
+    diffonly_str_colored,
+)
 
 configA = open("tests/configA.txt").read()
 configB = open("tests/configB.txt").read()

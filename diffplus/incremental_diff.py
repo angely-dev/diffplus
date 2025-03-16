@@ -1,6 +1,7 @@
-from .indented_config import IndentedConfig, IndentedConfigDict
-from re import sub, M
+from re import M, sub
 from typing import Dict
+
+from .indented_config import IndentedConfig, IndentedConfigDict
 
 # Recursive type alias
 IncrementalDiffDict = Dict[str, "IncrementalDiffDict"]
@@ -45,9 +46,7 @@ class IncrementalDiff:
     def __str__(self) -> str:
         str_ = IncrementalDiff._to_str(self.to_dict(), indent_char=self.a.indent_char)
         if self.colored:
-            str_ = sub(
-                r"^(\+.*)$", rf"{self._COLOR_GREEN}\1{self._COLOR_RESET}", str_, flags=M
-            )
+            str_ = sub(r"^(\+.*)$", rf"{self._COLOR_GREEN}\1{self._COLOR_RESET}", str_, flags=M)
         return str_.rstrip("\n")  # just a little hack to remove the last newline char
 
     #
@@ -55,9 +54,7 @@ class IncrementalDiff:
     # New items from A are prepended by "+" to tell them from existing ones from B.
     #
     @staticmethod
-    def _to_dict(
-        a: IndentedConfigDict, b: IndentedConfigDict, merge: bool = False
-    ) -> IncrementalDiffDict:
+    def _to_dict(a: IndentedConfigDict, b: IndentedConfigDict, merge: bool = False) -> IncrementalDiffDict:
         new_items: IncrementalDiffDict = {}
 
         for item in a.keys():
@@ -93,8 +90,6 @@ class IncrementalDiff:
             plus = is_new or item.startswith("+")
             str_ += "+" if plus else " "
             str_ += indent_level * indent_char + item.lstrip("+") + "\n"
-            str_ += IncrementalDiff._to_str(
-                incrdiff[item], indent_char, indent_level + 1, plus
-            )
+            str_ += IncrementalDiff._to_str(incrdiff[item], indent_char, indent_level + 1, plus)
 
         return str_
